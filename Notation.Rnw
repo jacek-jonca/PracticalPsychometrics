@@ -1,0 +1,34 @@
+% !Rnw root = Test.Rnw
+\chapter{Notation}
+Random variables are capital letters such as $X$ and $Y$.\\
+A particular value of $X$ is $x$.\\
+Vectors are bold lowercase symbols (e.g., $\boldsymbol{a}$, $\boldsymbol{\theta}$).\\
+Matrices are bold uppercase symbols (e.g., $\boldsymbol{A}$, $\boldsymbol{\Theta}$).\\
+
+Unfortunately, if vectors are lowercase and random variables are uppercase, my notation comes in conflict when discussing a vector of random variables (i.e., the variables as theoretical entities, not their particular scores). Such a vector will be a bold uppercase letter, (e.g., $\boldsymbol{X}$). A vector of particular scores from the variables in $\boldsymbol{X}$ will be shown as $\boldsymbol{x}$.
+
+\begin{conditions*}
+\phantomsection \label{note:R}\mathbb{R} & The set of all real numbers\\
+\phantomsection \label{note:Z}\mathbb{Z} & The set of all integers\\
+\phantomsection \label{note:N0}\mathbb{N}_0 & The set of all non-negative integers: $\{ 0,1,2,...\}$\\
+\phantomsection \label{note:N1}\mathbb{N}_1 & The set of all positive integers: $\{ 1,2,3,...\}$\\
+\phantomsection \label{note:Interval}\lbrack a,b\rbrack & The set of real numbers in the interval between $a$ and $b$\\
+\phantomsection \label{note:In}\in & Is a member of\\
+\phantomsection \label{note:binomial}\binom{n}{k} & The \emph{binomial coefficient}. It is just a shortcut notation for $\binom{n}{k}=\frac{n!}{k!\left(n-k\right)!}$. Read aloud, $\binom{n}{k}$ is ``$n$ choose $k$'' or the number of combinations that $n$ things have when taken $k$ at a time.\\
+f_X(x;\boldsymbol{\theta}) & The probability density function or probability mass function of $X$ with parameters $\boldsymbol{\theta}$\\
+F_X(x;\boldsymbol{\theta}) & The cumulative distribution function of $X$ with parameters $\boldsymbol{\theta}$\\
+E(X) & The expected value of $X$\\
+\mu_X, m_X & The population and sample mean of $X$\\
+\sigma_X, s_X & The population and sample standard deviation of $X$\\
+\sigma_X^2, s_X^2 & The population and sample variance of $X$\\
+\gamma_1, g_1 & The population and sample skewness\\
+\gamma_2, g_2 & The population and sample kurtosis\\
+\boldsymbol{R_X} & The correlation matrix of the variables in vector $\boldsymbol{X}$\\
+\boldsymbol{R_X} & The correlation matrix of the variables in vector $\boldsymbol{X}$\\
+\bs{A'} & The transpose of matrix $\bs{A}$\\
+\bs{A}^{-1} & The inverse of matrix $\bs{A}$\\
+\mathtt{diag}(\bs{A}) & The column vector formed from the diagonal of matrix $\bs{A}$\\
+\mathtt{diag}(\bs{a}) & The diagonal matrix formed from column vector $\bs{a}$\\
+\bs{1} & A column vector of ones. Its length can be inferred by context.\\
+\bs{I} & An identity matrix. Its dimensions can be inferred by context.\\
+\end{conditions*}

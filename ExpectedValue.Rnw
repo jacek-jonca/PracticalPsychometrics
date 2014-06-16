@@ -1,0 +1,81 @@
+% !Rnw root = Test.Rnw
+\chapter{Describing Distributions with Expected Values \& Moments}
+\section{Expected Values}
+At one level, the concept of the \defword{expected value}\marginnote{The \defword{expected value} of a random variable is the population mean of the values that the random variable generates.} of a random variable is really simple; it is just the population mean of the variable. So why don't we just talk about population means and be done with this ``expected value'' business? It just complicates things! True. In this case, however, there is value in letting some simple things appear to become complicated for a while so that later we can show that some apparently complicated things are actually simple. 
+
+Why can't we just say that the expected value of a random variable is the population mean? You are familiar, of course, with the formula for a mean. You just add up the numbers and divide by the number of numbers $n$:
+\begin{equation*}
+m_X=\frac{\sum_{i=1}^{n} {x_i}}{n}
+\end{equation*}
+Fine. Easy. Except...hmm...random variables generate an infinite number of numbers. Dividing by infinity is tricky. We'll have to approach this from a different angle...
+
+The expected value of a random variable is a weighted mean. A mean of what? Everything in the sample space. How are the sample space elements weighted? Each element in the sample space is multiplied by its probability of occurring.
+
+\begin{marginfigure}
+\centering
+<<ExpectedValue,echo=FALSE>>=
+par(mar = c(2, 4, 4, 1))
+x<-1:8
+p<-c(NA,0.3,NA,0.2,NA,NA,NA,0.5)
+names(p)<-x
+barplot(p,1,col="royalblue2",las=1,cex.axis=2,cex.names=2)
+@
+\caption{Probability distribution of a hypothetical random variable}
+\label{fig:pmfX}
+\end{marginfigure}
+
+Suppose that the sample space of a random variable $X$ is $\{2, 4, 8\}$ with respective probabilities of $\{0.3, 0.2, 0.5\}$, as shown in Figure~\ref{fig:pmfX}. Each sample space element is multiplied by its probability and the resulting products are summed to calculate the expected value of $X$. The expected value operator is $E()$. Thus,
+\begin{align*}
+E(X)&=\sum_{i=1}^{3}{p_i x_i}\\
+&= p_1x_1+p_2x_2+p_3x_3\\
+&= (0.3\times 2)+(0.2\times 4)+(0.5\times 8)\\
+&=5.4
+\end{align*}
+
+The term \emph{expected value} is a little misleading. In this case, 5.4 is the expected value of $X$ but $X$ never once generates a value of 5.4. So the expected value is not ``expected'' in the sense that we expect to see it often (like we do with the \defword{mode}). It is expected to be close to the mean of any sample of the variable that is sufficiently large:
+
+\begin{equation*}
+E(X)=\lim_{n \to \infty} \frac{1}{n}\sum_{i=1}^{n} {x_i}
+\end{equation*}
+
+If a discrete random variable $X$ with sample space $S$ has a \hyperref[sec:pmf]{probability mass function} $f_X(x)$, its expected value is
+\begin{equation}
+E(X)=\sum_{-\infty}^{\infty}{x_i f_X(x_i)}
+\end{equation}
+
+With continuous variables we have a problem: the number of elements in a  sample is infinite. Fortunately, calculus was designed to deal with this kind of infinity. The trick is to imagine that the continuous variable is sliced into bins and that the bins are sliced ever more thinly. If a continuous random variable has probability density function, the expected value is
+
+\begin{equation}
+E(X)=\int_{-\infty}^{\infty} {x f_X(x)\,\mathrm{d}x}
+\end{equation}
+
+\begin{figure*}
+\begin{center}
+<<latticeNormal,fig.width=6,fig.height=8,echo=FALSE>>=
+n<- numeric(0)
+x<- numeric(0)
+p<- numeric(0)
+MaxBinPower<-5
+binPower<-c(0:MaxBinPower)
+LowerBound<- -4
+UpperBound<- 4
+for(i in binPower) {
+  binWidth<-2^(-i)
+  bins<- (UpperBound-LowerBound)/binWidth+1
+  HighBin<-(pnorm(binWidth/2)-pnorm(-1*binWidth/2))/dnorm(0)
+  for(j in 1:bins){
+    xi<-LowerBound+(j-1)*binWidth
+    x<-c(x,xi-binWidth/2,xi-binWidth/2,xi+binWidth/2)
+    n<-c(n,i,i,i)
+    pi<-pnorm(xi+binWidth/2)-pnorm(xi-binWidth/2)
+    p<-c(p,0,pi/HighBin,pi/HighBin)
+  }
+}
+nfLabels<-paste("Bins per SD",2^(binPower-1),sep=" = ")
+nf<-factor(2^(n-1),labels=nfLabels)
+xyplot(p~x|nf,type="l",as.table=TRUE,layout=c(1,6),strip= strip.custom(bg="royalblue2"),col="firebrick2",ylab="Probability",scales=list(x=list(at=-4:4)))
+@
+\end{center}
+\caption{Slicing the standard normal distribution into ever thinner bins.}
+\label{fig:LatticeNormal}
+\end{figure*}

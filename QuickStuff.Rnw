@@ -1,0 +1,18 @@
+% !Rnw root = Test.Rnw
+\begin{tikzpicture}
+\foreach \i in {1,...,6} {
+  \node at (0,\i){$\sfrac{\i}{6}$};
+  \node at (\i,0){\Large{\i}};
+  \foreach \j in {1,...,6} {
+  \ifnum \j>\i
+    \node at (\i,\j) {\drawdie [scale=2]{\j}};
+  \else
+    \node at (\i,\j) {\drawdie [scale=2,line colour=royalblue,dot colour=royalblue]{\j}};
+  \fi
+  }
+}
+
+\draw[firebrick,very thick] (0.55,0.5)-- ++(0,1)-- ++(1,0)-- ++(0,1)-- ++(1,0)-- ++(0,1)-- ++(1,0)-- ++(0,1)-- ++(1,0)-- ++(0,1)-- ++(1,0)-- ++(0,1)-- ++(1,0)-- ++(0,-6)--cycle;
+\node[rotate=-90] at (-0.75,3.5) {\textbf{Probability}};
+\node at (3.5,-0.75) {\textbf{Die roll is this value or less}};
+\end{tikzpicture}

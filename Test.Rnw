@@ -1,0 +1,199 @@
+\documentclass[nohyper,justified,marginals=raggedright]{tufte-book}
+
+% \IfFileExists{bergamo.sty}{\usepackage[osf]{bergamo}}{}% Bembo
+% \IfFileExists{chantill.sty}{\usepackage{chantill}}{}% Gill Sans
+% \usepackage{lmodern}
+
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\usepackage{xfrac}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
+\renewcommand{\sectionmark}[1]{ \markright{#1}{} }
+
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\textit{ \nouppercase{\leftmark}} }
+\fancyhead[LO]{\textit{ \nouppercase{\rightmark}} }
+
+\fancypagestyle{plain}{ %
+  \fancyhf{} % remove everything
+  \renewcommand{\headrulewidth}{0pt} % remove lines as well
+  \renewcommand{\footrulewidth}{0pt}
+}
+\renewcommand{\headrulewidth}{\iffloatpage{0pt}{0.4pt}}
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\usepackage{subfig}
+
+\usepackage{url}
+\usepackage[unicode=true,
+ pdfusetitle,
+ bookmarks=true, bookmarksnumbered=true,bookmarksopen=true, bookmarksopenlevel=2,
+ breaklinks=true,
+ pdfborder={0 0 1},
+ backref=false,
+ colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,
+ pdftitle={Practical Psychometrics},
+ pdfsubject={A Psychological Assessment Toolkit},
+ pdfkeywords={psychometrics,psychological assessment},
+ pdfcreator=pdflatex]
+ {hyperref}
+\hypersetup{
+ pdfstartview=FitH}
+% \usepackage{breakurl}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{mathtools}
+% \usepackage[natbibapa]{apacite}
+\usepackage{natbib}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{arrows,shapes,backgrounds, shadows}
+\usetikzlibrary{calc}
+\tikzset{
+  dot hidden/.style={},
+  line hidden/.style={},
+  dot colour/.style={dot hidden/.append style={color=#1}},
+  dot colour/.default=black,
+  line colour/.style={line hidden/.append style={color=#1}},
+  line colour/.default=black
+}
+
+\usepackage{xparse}
+\NewDocumentCommand{\drawdie}{O{}m}{
+\begin{tikzpicture}[x=1em,y=1em,radius=0.1,#1]
+  \draw[rounded corners=2,line hidden] (0,0) rectangle (1,1);
+  \ifodd#2
+    \fill[dot hidden] (0.5,0.5) circle;
+  \fi
+  \ifnum#2>1
+    \fill[dot hidden] (0.25,0.25) circle;
+    \fill[dot hidden] (0.75,0.75) circle;
+   \ifnum#2>3
+     \fill[dot hidden] (0.25,0.75) circle;
+     \fill[dot hidden] (0.75,0.25) circle;
+    \ifnum#2>5
+      \fill[dot hidden] (0.75,0.5) circle;
+      \fill[dot hidden] (0.25,0.5) circle;
+     \ifnum#2>7
+       \fill[dot hidden] (0.5,0.75) circle;
+       \fill[dot hidden] (0.5,0.25) circle;
+      \fi
+    \fi
+  \fi
+\fi
+\end{tikzpicture}
+}  
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+
+\title{Practical Psychometrics: A Psychological Assessment Toolkit}
+\publisher{W. Joel Schneider}
+% \publisher{Where You're From}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+
+
+\usepackage[buttonsize=1em]{animate}
+
+
+\makeatother
+
+\def\Rho{P}
+\definecolor[named]{royalblue}{rgb}{0.26,0.43,0.93}
+\definecolor[named]{firebrick}{RGB}{205,38,38}
+\definecolor[named]{xBlue}{RGB}{0,0,255}
+\definecolor[named]{xGreen}{RGB}{0,128,0}
+\definecolor[named]{xPurple}{RGB}{153,0,204}
+% \setsidenotefont{\color{royalblue!70}}
+% \setcaptionfont{hfont commandsi}
+\setmarginnotefont{\color{royalblue}}
+\setcitationfont{\color{royalblue}}
+\setlength\marginparpush{6mm}
+% \let\oldmarginpar\marginpar
+% \renewcommand\marginpar[1]{\-\oldmarginpar[\color{blue} #1]%
+% {\color{blue} #1}}
+\newcommand{\defword}[1]{\textbf{#1}} 
+\newcommand{\citeapos}[1]{\citeauthor{#1}'s (\citeyear{#1})}
+
+% Redefine boldsymbol
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+\newenvironment{conditions}
+  {\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}c<{$} @{${}={}$} l}}
+  {\end{tabular}\par\vspace{\belowdisplayskip}}
+\usepackage{tabularx}
+\newenvironment{conditions*}
+{\par\vspace{\abovedisplayskip}\noindent
+ \tabularx{\columnwidth}{>{$}c<{$} @{${}={}$} >{\raggedright\arraybackslash}X}}
+{\endtabularx\par\vspace{\belowdisplayskip}}  
+
+
+\begin{document}
+
+<<setup, include=FALSE, cache=FALSE>>=
+require(tikzDevice)
+require(IDPmisc)
+require(lattice)
+require(xtable)
+require(Hmisc)
+require(sn)
+require(fMultivar)
+options(replace.assign=TRUE,width=50)
+opts_chunk$set(cache=TRUE,echo=FALSE,dev='tikz',tidy=TRUE)
+# opts_chunk$set(fig.path='figure/graphics-', cache.path='cache/graphics-', fig.align='center', fig.width=5, fig.height=5, cache=TRUE, echo=FALSE)
+# knit_hooks$set(par=function(before, options, envir){
+# if (before && options$fig.show!='none') par(mar=c(4,4,.1,.1),cex.lab=.95,cex.axis=.9,mgp=c(2,.7,0),tcl=-.3)
+# }, crop=hook_pdfcrop)
+.pardefault <- par(no.readonly = TRUE)
+library(grDevices)
+
+bmatrix<-function(M){
+  s<-character()
+  for (i in seq(1,nrow(M))){
+    s<-paste(s, paste(paste(M[i,], sep = " & ",collapse=" & "), "\\\\ ",sep=""),collapse="\n")
+  } 
+  return(s)
+}
+
+@
+% \frontmatter
+% \maketitle
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+% \tableofcontents
+<<'child-Notation',child='Notation.Rnw'>>=
+@
+
+<<'child-kIntroduction', child='kIntroduction.Rnw'>>=
+@
+
+\part{A Psychometrics Primer}
+\mainmatter
+<<'child-Variables', child='kVariables.Rnw'>>=
+@
+
+<<'child-Distributions', child='kDistributions.Rnw'>>=
+@
+<<'child-ExpectedValue', child='ExpectedValue.Rnw'>>=
+@
+
+<<'child-Composites',child='Composites.Rnw'>>=
+@
+
+%<<'child-QuickStuff', child='QuickStuff.Rnw'>>=
+%@
+\bibliographystyle{apalike}
+\bibliography{Toolkit}
+\end{document}
